@@ -1,0 +1,162 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dd6590c9-51cf-440a-8a9b-b2f12cf696bc",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        480,
+        0
+      ],
+      "id": "b3b04648-6f34-42ab-b96c-1d0bfc66caf5",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k",
+          "mode": "list",
+          "cachedResultName": "Monthly Rapo Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "awin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "69ea7bb6-6d75-424b-b66c-1957fbb2b8f2",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Y51KrsI5UuScQmh5",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "operation": "send",
+        "draftId": {
+          "__rl": true,
+          "value": "={{ $('Get row(s) in sheet').item.json.ID }}",
+          "mode": "id"
+        },
+        "to": "={{ $json.To }}"
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        736,
+        16
+      ],
+      "id": "1d6fc8fb-41a2-4104-8b41-f124a6fb5606",
+      "name": "Send a draft",
+      "webhookId": "01767d8d-5043-40f5-8382-b0d71f3f32ef",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "wtGuyoIRJ9RsRwnV",
+          "name": "Microsoft Outlook OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "task",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.salesforce",
+      "typeVersion": 1,
+      "position": [
+        320,
+        256
+      ],
+      "id": "1d826d07-ce32-4429-bb84-49da87f62288",
+      "name": "Create a task"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a draft": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "pinData": {},
+  "triggerCount": 0,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

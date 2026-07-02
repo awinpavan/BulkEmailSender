@@ -1,0 +1,595 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k",
+          "mode": "list",
+          "cachedResultName": "Monthly Rapo Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "awin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -88
+      ],
+      "id": "377cf4a8-9df6-4e03-a55f-07576c8f768e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Y51KrsI5UuScQmh5",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -88
+      ],
+      "id": "77e9013e-a8b6-4f72-8c6f-997ef62bc6d8",
+      "name": "Click"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a247abed-6a8b-494f-a881-0b05e89bd93a",
+              "name": "body",
+              "value": "Good day! I hope this message finds you well. I wanted to reach out and introduce myself — I'm looking forward to connecting with you and exploring how we can work together effectively.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -88
+      ],
+      "id": "f1989138-74a3-4bf7-b475-f4894eb6de48",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        896,
+        -88
+      ],
+      "id": "d9dd4059-ae1a-412c-b7b0-a7b3465ac8c3",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k",
+          "mode": "list",
+          "cachedResultName": "Monthly Rapo Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "awin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Filter').item.json.row_number }}",
+            "From ": "={{ $('Filter').item.json['From '] }}",
+            "To": "={{ $('Filter').item.json.To }}",
+            "CC": "={{ $('Filter').item.json.CC }}",
+            "Property Name": "={{ $('Filter').item.json['Property Name'] }}",
+            "Message": "={{ $json.output[0].content[0].text }}",
+            "To Name": "={{ $('Filter').item.json['To Name'] }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "From ",
+              "displayName": "From ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "To",
+              "displayName": "To",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "To Name",
+              "displayName": "To Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Property Name",
+              "displayName": "Property Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CC",
+              "displayName": "CC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        -160
+      ],
+      "id": "b861d4f6-1646-43e6-a6ab-4ef8fc89b87a",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Y51KrsI5UuScQmh5",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=You are a professional email copywriter. You will be given these fields:\n- From (sender name)\n- To (recipient name)\n- Property Name\n\nWrite a warm, professional introduction email body. \nSlightly vary the tone and wording for each row to keep it unique.\n\nReturn only the email start (indlude dear and the persorns first name) body and conclusion, no need fo the signature of the persorn in the end "
+            },
+            {
+              "content": "=Body: {{ $('Edit Fields1').item.json.body }}\nRow No.:{{ $json.row_number }}\nTo: {{ $json.To }}\nTo Name: {{ $json['To Name'] }}\nProperty Name:{{ $json['Property Name'] }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        -160
+      ],
+      "id": "c8d05b2a-730a-4be9-bca9-84800ade769a",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "vsuPqs8E282rDuNH",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2e5eacba-96f7-4208-94c6-6a23e6e5aab5",
+              "leftValue": "={{ $json.To }}",
+              "rightValue": "=\"\"",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b32da781-785b-45a0-8a46-8b3edc7069c5",
+              "leftValue": "={{ $json['To Name'] }}",
+              "rightValue": "\"\"",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        -88
+      ],
+      "id": "5f41aa4e-d031-4f5c-87da-33c7b21ba739",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const signature = `<div dir=\"ltr\">\n<p><strong>Awin Pavan&nbsp;| Application Support Engineer</strong><br /><p><strong>Email:&nbsp;</strong><a href=\"mailto:awin@samsotech-id.com\">awin@samsotech-id.com</a><br />\n<strong>P:&nbsp;</strong>+971 (0) 4 334 5708&nbsp;<strong>&nbsp;&nbsp;<br />M:&nbsp;</strong>+971 55 3153709<br /><strong>Global&nbsp;support:&nbsp;</strong><a href=\"mailto:support@samsotech-id.com\"><strong>support@samsotech-id.com</strong></a></p>\n<p><strong><a href=\"http://www.samsotech-id.com/\">Samsotech</a></strong><br />\n<strong>Cupertino | Las Vegas | London | Madrid | Doha | Dubai&nbsp;| Singapore | India</strong><br />\n<strong><a href=\"https://www.samsotech-id.com/\">www.samsotech-id.com</a></strong></p>\n<p><strong>DISCLAIMER: This email (including any attachments) is intended for the sole use of the intended recipient/s and may contain material that is CONFIDENTIAL AND PRIVATE COMPANY INFORMATION. Any review or reliance by others or copying or distribution or forwarding of any or all of the contents of this message is STRICTLY PROHIBITED. The opinions expressed are those of the sender and do not necessarily reflect those of the Company. If you are not the intended recipient, please contact the sender by email and delete all copies; your cooperation in this regard is appreciated.</strong></p>\n</div>`;\n\nconst message = String($json.Message || '');\nconst htmlMessage = message\n  .replace(/\\n\\n/g, '</p><p>')\n  .replace(/\\n/g, '<br/>')\n  .replace(/^/, '<p>')\n  .replace(/$/, '</p>');\n\nreturn { body: htmlMessage + signature };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        -160
+      ],
+      "id": "7ec44d4d-e254-4ba9-bd26-96d20749b063",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k",
+          "mode": "list",
+          "cachedResultName": "Monthly Rapo Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "awin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13dvy2faBPncFvzbsaBhUPIRmfC2hb31_BG9X_FvB17k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.id }}",
+            "From ": "={{ $('Update row in sheet').item.json['From '] }}",
+            "To": "={{ $('Update row in sheet').item.json.To }}",
+            "Property Name": "={{ $('Update row in sheet').item.json['Property Name'] }}",
+            "To Name": "={{ $('Update row in sheet').item.json['To Name'] }}",
+            "Message": "={{ $('Update row in sheet').item.json.Message }}",
+            "CC": "={{ $('Update row in sheet').item.json.CC }}",
+            "row_number": "={{ $('Update row in sheet').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "From ",
+              "displayName": "From ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "To",
+              "displayName": "To",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "To Name",
+              "displayName": "To Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Property Name",
+              "displayName": "Property Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CC",
+              "displayName": "CC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2144,
+        -88
+      ],
+      "id": "84b0d861-ad61-4bac-96ba-dfdd69571217",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Y51KrsI5UuScQmh5",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $('Update row in sheet').item.json['Property Name'] + ' || Feedback Form' }}",
+        "bodyContent": "={{ $json.body }}",
+        "additionalFields": {
+          "ccRecipients": "={{ $('Update row in sheet').item.json.CC }}",
+          "from": "={{ $('Update row in sheet').item.json['From '] }}",
+          "bodyContentType": "html",
+          "toRecipients": "={{ $('Update row in sheet').item.json.To }}"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        -160
+      ],
+      "id": "14c94c3d-dbe9-43e3-86f2-d2ca7608cfce",
+      "name": "Create a draft",
+      "webhookId": "d5068a20-4d4b-4e1c-b4fc-29f29f8f92ce",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "wtGuyoIRJ9RsRwnV",
+          "name": "Microsoft Outlook OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "pinData": {},
+  "triggerCount": 0,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
